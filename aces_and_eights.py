@@ -8,6 +8,7 @@ class AcesAndEightsGame:
         self.num_cards = num_cards
         self.cards = [CardValue.ACE] * (num_cards // 2) + [CardValue.EIGHT] * (num_cards // 2)
         self.players = [Player(f'Player {i+1}') for i in range(num_players)]
+        self.table = None
 
     def deal_cards(self):
         random.shuffle(self.cards)
@@ -16,6 +17,7 @@ class AcesAndEightsGame:
             for card in player.cards:
                 self.cards.remove(card)
             player.set_knows_cards(False)
+        self.table = self.cards
 
     def make_announcements(self):
         for player in self.players:

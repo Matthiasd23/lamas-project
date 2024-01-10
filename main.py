@@ -8,3 +8,5 @@ if __name__ == "__main__":
         print(f"\nRound {round_num + 1}:")
 
         game.make_announcements()
+        if game.check_for_winners():
+            break

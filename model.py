@@ -1,4 +1,6 @@
 import re
+import networkx as nx
+import matplotlib.pyplot as plt
 
 all_states = ['AAAA88', 'AAA8A8', 'AAA888', 'AA88AA', 'AA88A8', 'AA8888', 'A8AAA8', 'A8AA88', 'A8A8AA', 'A8A8A8', 'A8A888', 'A888AA', 'A888A8', '88AAAA', '88AAA8', '88AA88', '88A8AA', '88A8A8', '8888AA']
 
@@ -10,7 +12,7 @@ class KripkeModel:
         self.transitions = {player: {} for player in range(1, 4)}
         self.initialize_model()
         self.state_regex = ""
-    
+
     def __str__(self):
         model_str = f"Player Name: {self.player_name}\n"
         model_str += f"Player Cards: {self.cards}\n"
@@ -110,3 +112,18 @@ class KripkeModel:
 
         print(f"{self.player_name} removing states: {states_to_remove}")
         print(self)
+
+    def display_graph(self):
+        G = nx.DiGraph()
+        for state in self.states:
+            G.add_node(state)
+        for player, transitions in self.transitions.items():
+            for start_state, end_states in transitions.items():
+                for end_state in end_states:
+                    G.add_edge(start_state, end_state, player=player)
+
+        pos = nx.spring_layout(G)
+        nx.draw(G, pos, with_labels=True, node_color='lightblue', edge_color='gray', node_size=2000)
+        edge_labels = nx.get_edge_attributes(G, 'player')
+        nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels)
+        plt.show()

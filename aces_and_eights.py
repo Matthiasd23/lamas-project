@@ -12,7 +12,8 @@ class AcesAndEightsGame:
 
     def deal_cards(self):
         random.shuffle(self.cards)
-        print(f"Cards: {''.join(self.cards)}")
+        # self.cards = ["8"] + ["8"] + ["A"] + ["A"] + ["A"] + ["8"] + ["A"] + ["8"]
+        print(f"Cards: {(''.join(self.cards))[:-2]}")
 
         for i, player in enumerate(self.players):
             index = i * 2
@@ -31,7 +32,7 @@ class AcesAndEightsGame:
                         visible_cards += other_player.cards
                 else:  # Use regex for correct search?
                     visible_cards += [".", "."]
-            player.update_initial_model(visible_cards)
+            player.set_model_state_regex(''.join(visible_cards))
 
     def make_announcements(self):
         for player in self.players:
@@ -44,4 +45,4 @@ class AcesAndEightsGame:
                 return True
         for player in self.players:
             player.update_dont_know()
-        print("No one knows there cards yet, playing another round.")
+        print("No one knows their cards yet, playing another round.")

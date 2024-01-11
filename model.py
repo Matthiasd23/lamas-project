@@ -9,7 +9,27 @@ class KripkeModel:
         self.states = set()
         self.transitions = {player: {} for player in range(1, 4)}
         self.initialize_model()
+        self.state_regex = ""
     
+    def __str__(self):
+        model_str = f"Player Name: {self.player_name}\n"
+        model_str += f"Player Cards: {self.cards}\n"
+        model_str += f"States: {', '.join(self.states)}\n"
+
+        for player, transitions in self.transitions.items():
+            model_str += f"\nTransitions for Player {player}:\n"
+            for start_state, end_states in transitions.items():
+                for end_state in end_states:
+                    model_str += f"{start_state} -> {end_state}\n"
+
+        return model_str
+
+    def set_state_regex(self, state_regex):
+        self.state_regex = state_regex
+
+    def get_cards(self):
+        return self.cards
+
     def add_state(self, state):
         self.states.add(state)
 
@@ -46,23 +66,40 @@ class KripkeModel:
             for start, end in transition:
                 self.add_transition(all_states[start - 1], all_states[end - 1], player)
 
-    def update_initial_cards(self, cards):
-        card_regex = ''.join(cards)
-        pattern = re.compile(card_regex)
-        print(f"{self.player_name} knows's cards: {card_regex}")
-        states = [state for state in self.states if not pattern.match(state)]
+    def deduce_states(self):
+        if self.state_regex:
+            print(f"{self.player_name} state regex: {self.state_regex}")
+            pattern = re.compile(self.state_regex)
+            states = [state for state in self.states if not pattern.match(state)]
+            all_states = self.states
 
-        for state in states:
-            self.remove_state(state)
-        
-        print(f"{self.player_name} remaining states: {self.states}")
+            for state in states:
+                all_states.remove(state)
+
+            if len(all_states) == 1:
+                correct_state = list(all_states)[0]
+                location = int(self.player_name[-1])*2
+                cards = correct_state[location-2:location]
+                self.cards = cards
+                return True
+
+        return False
 
     def update_dont_know(self):
         states_to_remove = set()
         all_transitions = set(self.states)
 
-        for player_transitions in self.transitions.values():
-            all_transitions &= set(player_transitions.keys())
+        # This is not correct: 88AAA8
+        for idx, player_transitions in enumerate(self.transitions.values()):
+            states_to_keep = set()
+            for key, values in player_transitions.items():
+                if len(values) > 0:
+                    states_to_keep.add(key)
+                for value in values:
+                    states_to_keep.add(value)
+            # print(f"Player {idx + 1} transitions: {player_transitions.items()}")
+            # print(f"Player {idx + 1} transitions: {player_transitions.values()}")
+            all_transitions &= states_to_keep
 
         for state in self.states:
             if state not in all_transitions:
@@ -71,4 +108,5 @@ class KripkeModel:
         for state in states_to_remove:
             self.remove_state(state)
 
-        print(f"{self.player_name} remaining states: {self.states}")
+        print(f"{self.player_name} removing states: {states_to_remove}")
+        print(self)

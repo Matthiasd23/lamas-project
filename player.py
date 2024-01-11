@@ -9,7 +9,6 @@ class Player:
         self.cards = []
         self.knows_cards = False
         self.model = KripkeModel(all_cards, name)
-        self.model.initialize_model()
 
     def __str__(self):
         return self.name
@@ -17,15 +16,12 @@ class Player:
     def print_cards(self):
         print(f"{self.name}'s cards: {self.cards}")
 
-    def update_initial_model(self, cards):
-        self.model.update_initial_cards(cards)
-        self.deduce_cards()
+    def set_model_state_regex(self, state_regex):
+        self.model.set_state_regex(state_regex)
     
     def print_knows_cards(self):
         if self.knows_cards:
-            state = list(self.model.states)[0]
-            location = int(self.name[-1])*2
-            cards = state[location-2:location]
+            cards = self.model.get_cards()
             print(f"{self.name} knows their cards: an " + cards[0] + " and an " + cards[1] + ".")
         else:
             print(f"{self.name} doesn't know their cards.")
@@ -34,10 +30,11 @@ class Player:
         self.knows_cards = knows_cards
 
     def deduce_cards(self):
-        if len(self.model.states) == 1:
+        if self.model.deduce_states():
             self.set_knows_cards(True)
 
     def communicate(self):
+        self.deduce_cards()
         self.print_knows_cards()
         
         return self.knows_cards

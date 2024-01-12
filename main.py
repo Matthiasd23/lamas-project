@@ -1,6 +1,7 @@
 from aces_and_eights import AcesAndEightsGame
 
 if __name__ == "__main__":
+    """Run a game of Aces and Eights."""
     game = AcesAndEightsGame()
     game.deal_cards()
 

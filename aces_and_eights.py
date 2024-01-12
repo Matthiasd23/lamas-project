@@ -3,6 +3,12 @@ from player import Player
 
 class AcesAndEightsGame:
     def __init__(self, num_players=3, num_cards=8):
+        """Set up a new game of Aces and Eights.
+
+        Args:
+        num_players (int): The number of players in the game.
+        num_cards (int): The total number of cards to be used.
+        """
         self.num_players = num_players
         self.num_cards = num_cards
         self.cards = ["A"] * (num_cards // 2) + ["8"] * (num_cards // 2)
@@ -41,12 +47,14 @@ class AcesAndEightsGame:
 
     def make_announcements(self):
         """
-        Let all players communicate.
+        Have each player make an announcement about their knowledge state.
         """
         for player in self.players:
             player.communicate()
 
     def check_for_winners(self):
+        """Check if there are any winners and update models if the game continues."""
+
         winners = []
         for player in self.players:
             if player.knows_cards:

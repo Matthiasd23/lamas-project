@@ -4,7 +4,9 @@ if __name__ == "__main__":
     game = AcesAndEightsGame()
     game.deal_cards()
 
-    for round_num in range(3):  # Assuming 3 rounds for demonstration
+    # Assume 4 rounds for demonstration
+    # Since that is the max needed to deduce anyone's cards
+    for round_num in range(4):  
         print(f"\nRound {round_num + 1}:")
 
         game.make_announcements()

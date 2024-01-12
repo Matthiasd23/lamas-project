@@ -30,16 +30,25 @@ class Player:
         self.knows_cards = knows_cards
 
     def deduce_cards(self):
-        if self.model.deduce_states():
+        """
+        Use the model to (possibly) deduce the cards the player has.
+        """
+        if self.model.deduce_state():
             self.set_knows_cards(True)
 
     def communicate(self):
+        """
+        Try to deduce cards and tell other players what you know.
+        """
         self.deduce_cards()
         self.print_knows_cards()
-        self.model.display_graph()
+        self.model.display_graph() # Comment out to get faster results
         return self.knows_cards
     
     def update_dont_know(self):
+        """
+        If everyone announces they don't know their cards, update the model.
+        """
         self.model.update_dont_know()
         self.deduce_cards()
         

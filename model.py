@@ -112,7 +112,6 @@ class KripkeModel(nx.Graph):
         bool: True if the state could be deduced, False otherwise.
         """
         if self.state_regex:
-            # print(f"{self.player_name} state regex: {self.state_regex}")
             pattern = re.compile(self.state_regex)
             states = [state for state in self.states if not pattern.match(state)]
             all_states = list(self.states)

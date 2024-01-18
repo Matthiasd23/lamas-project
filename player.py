@@ -1,5 +1,3 @@
-# probably add libraries to create the kripke world models
-
 from model import KripkeModel
 
 
@@ -61,7 +59,7 @@ class Player:
         """
         self.deduce_cards()
         self.print_knows_cards()
-        self.model.display_graph() # Comment out to get faster results
+        # self.model.display_graph() # Commented out to not spam the console
         return self.knows_cards
     
     def update_dont_know(self):

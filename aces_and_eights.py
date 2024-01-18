@@ -21,7 +21,6 @@ class AcesAndEightsGame:
         the other players' cards in their model.
         """
         random.shuffle(self.cards)
-        # self.cards = ["8"] + ["A"] + ["8"] + ["A"] + ["8"] + ["A"] + ["8"] + ["A"]
         print(f"Correct state: {(''.join(self.cards))[:-2]}")
 
         # Deal cards to players

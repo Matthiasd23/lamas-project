@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyzing the Aces and Eights game Using a Kripke Model</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1, h2, h3 {
+            color: #333;
+        }
+
+        section {
+            margin-bottom: 20px;
+        }
+
+        p {
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            margin-bottom: 10px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        code {
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        figure {
+            text-align: center;
+        }
+
+        figcaption {
+            font-style: italic;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Analyzing the Aces and Eights game Using a Kripke Model</h1>
+        <p><em>Group 6<br>Matthias Drijfhout, Sharma Dhruvs, Lucas Velvis<br>University of Groningen<br>January 18,
+                2024</em></p>
+    </header>
+
+    <section>
+      <h2>Introduction</h2>
+      <p>In the field of epistemic reasoning, the Aces and Eights \citep{cedegao2021} riddle is a compelling case study for logicians. 
+          The following text serves as our report on applying Kripke's reasoning to the puzzle. The puzzle consists of three players, each of which is dealt two of eight cards, 4 aces and 4 eights. 
+          Out of these, 2 cards are left face down and no player can see their cards but can see the ones dealt to others. Through repeated public announcements (PAs) one of the players is eventually able to figure out what hand they were dealt. 
+          A Kripke model is applied here, where different states represent the different possibilities of card combinations (worlds $w_i$). These worlds are connected via accessibility relations that visualize the players' knowledge. 
+          Through repeated PAs, the possible states can be reduced until a player knows their cards, which is the case if one of the players has the same (set of) cards in all words she considers possible.</p>
+
+      <h4>Game description</h4>
+      <p>
+          Before we continue with the detailed game description and its rules, we first establish some common knowledge at the start of the game:
+          <ul>
+            <li>Every player konws the rules</li>
+            <li>Every player tells the truth</li>
+            <li>Every player is a perfect logical reasoner</li>
+            <li>These rules are common knowledge</li>
+          </ul>
+      Now that this has been established, we can explain the exact procedure of the game; it starts with 3 players and 8 cards, the latter consisting of 4 aces and 4 eights. 
+      Next, each player is dealt 2 cards after they are shuffled of course, with the remaining two being put face down on the surface, for example, a table. They remain unseen for the rest of the game.
+      Importantly, no player can see their own cards, but only the cards dealt to other players. In practice this would mean holding your cards in front of you with the backside towards yourself. 
+      Based on a predetermined order, each one of the players takes turns announcing (public announcements) whether they know the cards dealt to them or not. In our model we will change this, by letting all players do their public announcement at the same time. 
+      This allows the other players in the game to reason and deduce what cards they have based on what others know, and eventually, after repeated rounds of questioning, one of the three players would know what cards they were dealt.
+      The puzzle is ingeniously constructed to require the players to use a combination of deductive logic, inference based on others' actions or inactions, and an understanding of higher-order knowledge—what they know, what they know others know, and so on. 
+      Luckily for us, it can be modeled using a Kripke structure, which allows for the representation of possible worlds—each corresponding to a different arrangement of cards—and accessibility relations that encapsulate the players' knowledge about these worlds.
+      </p>
+      <h4>Game rules</h4>
+      <p></p>
+    </section>
+
+    <section>
+        <h2>Formal Model</h2>
+
+        <!-- ... (Continue with the formal model content) -->
+
+    </section>
+
+    <section>
+        <h2>Riddle Implementation</h2>
+
+        <!-- ... (Continue with the riddle implementation content) -->
+
+    </section>
+
+    <section>
+        <h2>Results</h2>
+
+        <!-- ... (Continue with the results content) -->
+
+    </section>
+
+    <section>
+        <h2>Discussion and Conclusion</h2>
+
+        <!-- ... (Continue with the discussion and conclusion content) -->
+
+    </section>
+
+</body>
+
+</html>

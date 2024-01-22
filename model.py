@@ -1,6 +1,7 @@
 import re
 import networkx as nx
 import matplotlib.pyplot as plt
+import copy
 
 # All possible states of the game, taking into account that A8 is the same as 8A.
 all_states = ['AAAA88', 'AAA8A8', 'AAA888', 'AA88AA', 'AA88A8', 'AA8888', 'A8AAA8', 'A8AA88', 'A8A8AA', 'A8A8A8',
@@ -156,8 +157,15 @@ class KripkeModel(nx.Graph):
         """
         Display the Kripke model graph using networkx and matplotlib.
         """
-        pos = nx.spring_layout(self)
-        nx.draw(self, pos, with_labels=True, node_color='lightblue', edge_color='gray', node_size=2000)
-        edge_labels = nx.get_edge_attributes(self, 'player')
-        nx.draw_networkx_edge_labels(self, pos, edge_labels=edge_labels)
+        view_graph = copy.deepcopy(self)
+        if self.state_regex:
+            pattern = re.compile(self.state_regex)
+            states = [state for state in self.states if not pattern.match(state)]
+            for state in states:
+                view_graph.remove_state(state)
+
+        pos = nx.spring_layout(view_graph)
+        nx.draw(view_graph, pos, with_labels=True, node_color='lightblue', edge_color='gray', node_size=2000)
+        edge_labels = nx.get_edge_attributes(view_graph, 'player')
+        nx.draw_networkx_edge_labels(view_graph, pos, edge_labels=edge_labels)
         plt.show()

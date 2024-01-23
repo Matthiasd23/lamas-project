@@ -1,7 +1,13 @@
 from aces_and_eights import AcesAndEightsGame
+import shutil
+import os
 
 if __name__ == "__main__":
     """Run a game of Aces and Eights."""
+    # Reinstantiate the folder for visualizations
+    shutil.rmtree("visualization")
+    os.makedirs("visualization")
+
     game = AcesAndEightsGame()
     game.deal_cards()
 

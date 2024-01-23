@@ -59,7 +59,7 @@ class Player:
         """
         self.deduce_cards()
         self.print_knows_cards()
-        # self.model.display_graph() # Commented out to not spam the console
+        self.model.display_graph()
         return self.knows_cards
     
     def update_dont_know(self):

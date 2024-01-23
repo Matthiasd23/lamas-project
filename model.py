@@ -29,6 +29,7 @@ class KripkeModel(nx.Graph):
         self.player_name = player_name
         self.cards = cards
         self.state_regex = ""
+        self.round = 0
         self.initialize_model()
 
     def set_state_regex(self, state_regex):
@@ -104,6 +105,8 @@ class KripkeModel(nx.Graph):
             for start, end in transition:
                 self.add_transition(all_states[start - 1], all_states[end - 1], player)
 
+        self.display_graph()
+
     def deduce_state(self):
         """
         Deduce actual state by removing states that don't match the state regex (cards a player knows) 
@@ -168,4 +171,10 @@ class KripkeModel(nx.Graph):
         nx.draw(view_graph, pos, with_labels=True, node_color='lightblue', edge_color='gray', node_size=2000)
         edge_labels = nx.get_edge_attributes(view_graph, 'player')
         nx.draw_networkx_edge_labels(view_graph, pos, edge_labels=edge_labels)
-        plt.show()
+
+        # Save the graph to a file for player 1
+        plt.savefig(f"visualization/{self.player_name}_round_{self.round}.png", bbox_inches='tight', format='png')
+        self.round += 1
+
+        # plt.show() # Uncomment to show the graph in a window
+        plt.clf()

@@ -40,6 +40,7 @@ class KripkeModel(nx.Graph):
         For example: "A8..A8", which would be the regex of player 2.
         """
         self.state_regex = state_regex
+        self.display_graph()
 
     def get_cards(self):
         """Get the cards currently held by the player.
@@ -105,8 +106,6 @@ class KripkeModel(nx.Graph):
             for start, end in transition:
                 self.add_transition(all_states[start - 1], all_states[end - 1], player)
 
-        self.display_graph()
-
     def deduce_state(self):
         """
         Deduce actual state by removing states that don't match the state regex (cards a player knows) 
@@ -167,7 +166,7 @@ class KripkeModel(nx.Graph):
             for state in states:
                 view_graph.remove_state(state)
 
-        pos = nx.spring_layout(view_graph)
+        pos = nx.spring_layout(view_graph, iterations=250)
         nx.draw(view_graph, pos, with_labels=True, node_color='lightblue', edge_color='gray', node_size=2000)
         edge_labels = nx.get_edge_attributes(view_graph, 'player')
         nx.draw_networkx_edge_labels(view_graph, pos, edge_labels=edge_labels)

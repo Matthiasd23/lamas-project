@@ -12,6 +12,7 @@
     <script>
       MathJax = {
         tex: {
+          tags: 'ams',
           inlineMath: [['$', '$']]
         }
       };
@@ -115,7 +116,55 @@
         $$
         </div>
 
+        Therefore, all states $v$ $ \in S$  where $(M, v) \models K_iAA_i$ and all states $v$ $ \in S$ where $(M, v) \models K_iA8_i $ and all states $v$ $ \in S$ where
+        $(M, v) \models K_i88_i$ should be considered impossible and can thus be removed from the model.<br>
+        Since this rule is generalized for all agents, a simultaneous announcement where all agents announce "I don't know":  "$\neg(K_i88_i \lor K_iA8_i \lor K_iAA_i)$" could be rewritten as
+        $\forall v \in S$ where $(M, v) \models K_iAA_i$ and $\forall v \in S$ where $(M, v) \models K_iA8_i $ and $\forall v \in S$ where $(M, v) \models K_i88_i$ for all agents $i \in A$,
+        should be considered impossible and can thus be removed from the model.<br>
 
+        Proposition 1 below shows a public announcement where all agents do not know their cards. This is the most influential announcement to the model.<br>
+
+        <!-- The equation is wrapped in a <div> to use block-level MathJax rendering -->
+        <div>
+        $$
+        \begin{equation}
+            (M, s) \models \bigwedge_{i\in A}(\neg (K_iAA_i \lor K_iA8_i \lor K_i88_i))
+            \label{eq:pa_dontknow}
+        \end{equation}
+        $$
+        </div>
+
+        <h3>Example game</h3>
+        In this section we will cover an example round. Let assume a game in which the true state is $A8A8A8$. After the end of Round 2, the Kripke model graph
+        would look as is shown in Figure \ref{example-run-1}. We will formally work-out the events occurring in Round 3 and Round 4 below. Let's say we want to know the truth value for <br>
+
+        <div>
+        $$
+        \begin{equation}
+        (M,A8A8A8) \models [PA_1][PA_2][PA_3] K_1A8 \lor K_2A8 \lor K_3A8
+        \label{eq:prop}
+        \end{equation}
+        $$
+        </div>
+
+        with $PA_1$ the announcement in the first round, $PA_2$ the announcement in the second round, and $PA_3$ the announcement in the third round. We use a disjunction,
+        as the game ends when any player knows their cards, not necessarily all of them.<br>
+        The starting rounds will be globally explained to give insight into the development of the game and we will formally work out the third and fourth round of the game.
+
+        <h4>Starting rounds</h4>
+        Round 1 nobody knows their cards. Therefore all players will announce: "I don't know". After that announcement the Kripke model will look like
+        <a href="#example-run">Figure 2</a>. In Round 2, no player, again, knows their cards. Thus, all players will announce: "I don't know once more",
+        resulting in the Kripke model as shown in <a href="#example-run-1">Figure 2</a>. The developments from now on will be formally clarified in the sections below.<br>
+
+        <figure id="example-run" style="text-align:center;">
+        <img src="visualization/round_2.png" alt="Kripke Model round 2" style="width:50%;">
+        <figcaption style="font-size: larger;">Figure 2. The Kripke model after $PA_1$.</figcaption>
+        </figure>
+
+        <figure id="example-run-1" style="text-align:center;">
+        <img src="visualization/round_3.png" alt="Kripke Model round 3" style="width:50%;">
+        <figcaption style="font-size: larger;">Figure 2. The Kripke model after $PA_2$.</figcaption>
+        </figure>
     </section>
 
     <section>

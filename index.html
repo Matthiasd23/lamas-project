@@ -58,13 +58,13 @@
     </section>
 
     <section>
-        <h2>Formal Model</h2>
+        <h2 id="model">Formal Model</h2>
         <h3>Kripke Model</h3>
 
-        For a formal representation of the problem we use the notation as given by \cite{jdtop2024}. For the Aces and Eights we use $A=\{1,2,3\}$ and $P=\{88_1, A8_1,AA_1,88_2,A8_2,AA_2,88_3,A8_3,AA_3\}$,
+        For a formal representation of the problem we use the notation as given by <a href="#ref2">Top et al., 2024</a>. For the Aces and Eights we use $A=\{1,2,3\}$ and $P=\{88_1, A8_1,AA_1,88_2,A8_2,AA_2,88_3,A8_3,AA_3\}$,
         where $88_1$ means `Player 1 holds two eights', and $A8_2$ means `Player 2 holds an eight and an ace' etc.<br>
         The Kripke model is in $S5$ and formulated as follows $M=\langle S,R,V\rangle$.<br>
-        Each state $s \in S$ was formulated in a sequential manner from player 1 to 3, with an ``A" representing an ace and an ``8" representing the 8 card.<br>
+        Each state $s \in S$ was formulated in a sequential manner from player 1 to 3, with an "A" representing an ace and an "8" representing the 8 card.<br>
         The transitions $R$ for each player in the model connect each state for which the agent's own cards differ and the other agent's cards do not, as this is
         the only uncertainty each agent has. The relations for agent $i$ are $R_i(w,v)$ iff $V(P_j) \in v$ and $V(P_j) \in w$ with $i,j \in A$ and for all $j \neq i$,
         where $P_j$ is player $j$'s hand, e.g. $R_i(w,v)$ exists where $w=A8A8A8$ and $v=AAA8A8$ because $V(A8_2) \in w$ and $V(A8_2) \in v$, $V(A8_3) \in w$ and $V(A8_3) \in v$.<br>
@@ -74,7 +74,7 @@
         as each one is already incorporated by its A8 counterpart, so the order does not matter. This results in 19 possible states. A graph of the resulting model is shown in <a href="#initial-model">Figure 1</a>.
     <figure id="initial-model" style="text-align:center;">
         <img src="visualization/round_1.png" alt="Initial Kripke Model" style="width:50%;">
-        <figcaption>The initial Kripke model at the start of the game.</figcaption>
+        <figcaption style="font-size: larger;">Figure 1. The initial Kripke model at the start of the game.</figcaption>
     </figure>
 
 
@@ -84,10 +84,37 @@
         <li> Reflexive edges are not drawn.</li>
         <li> Lines are drawn instead of symmetrical edges.</li>
         <li> Note that for some of the transitions around the middle (A8A8A8) state, some transitive edges have become hidden, because of a visualisation issue with the
-        used Python library ``networkx", which could not be easily resolved.</li>
+        used Python library "networkx", which could not be easily resolved.</li>
     </ul>
+        <h3>Public Announcement</h3>
+        In this problem we have two possible public announcements, one is `I know my cards!' and the other `I do not know my cards!'.
+        An agent <i>i</i> can have one of the three card-combinations $88_i, A8_i$ or $AA_i$. Therefore, when an agent knows their cards, the formal notation for agent $i$
+        who says `I know my cards!' is given as a disjunction of them knowing one of those cards combinations: $K_i88_i \lor K_iA8_i \lor K_iAA_i$. Agent $i$ knows he has either
+        the set $AA$, $A8$ or $88$. The announcement `I do not know my cards!' for agent $i$ is given as the negation of "I know my cards!": $\neg(K_i88_i \lor K_iA8_i \lor K_iAA_i)$.
+        Creating simultaneous announcements, however, can lead to unsuccessful announcements, where the announcement becomes untrue after applying the public announcement to the model.
 
-        <!-- ... (Continue with the formal model content) -->
+        <h4>Informal Explanation</h4>
+        Whenever all agents announce "I don't know" simultaneously, all states that do not have outgoing transitions to another state for every player should be removed,
+        because those states are no longer possibilities. Why that is, we will explain with a short example (based on the example provided by <a href="#ref1">Cedegao et al., 2021</a>):
+        Suppose the actual state is AAA888. In Round 1, each player has to announce "I don't know", because (as you can see in the top-right corner of <a href="#initial-model">Figure 1</a>)
+        AAA888 has outgoing non-reflexive transitions for every player, which illustrates that all players cannot rule those connected states out. Therefore, when
+        "I don't know" is announced, the graph is updated by every player by eliminating all states that do not have outgoing transitions for all players. Because,
+        if one of those states had been the true state, the player with no outgoing transitions would then have known their cards.
+
+        <h4>Formal Implication</h4>
+        Given <i>M</i> as defined previously (in <a href="#model">Section Formal Model</a>) and any state $v$ $ \in S$, if agent <i>i</i>  ($\in A$),(announces "I don't know", that is
+        equivalent to the following formal statement (and the subsequent equivalences):<br>
+
+        <div>
+        $$
+        \begin{flalign*}
+            &(M, v) \models \neg (K_iAA_i \lor K_iA8_i \lor K_i88_i) && \Leftrightarrow \text{De Morgan} &\\
+            &(M, v) \models \neg K_iAA_i \land \neg K_iA8_i \land \neg K_i88_i  && \Leftrightarrow \text{Definition of "}\land\text{''} &\\
+            &(M, v) \not\models K_iAA_i \text{ and } (M, v) \not\models K_iA8_i \text{ and } (M, v) \not\models K_i88_i &&
+        \end{flalign*}
+        $$
+        </div>
+
 
     </section>
 

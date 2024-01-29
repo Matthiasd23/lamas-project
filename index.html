@@ -36,7 +36,7 @@
           These worlds are connected via accessibility relations that visualize the players' knowledge. Through repeated PAs, the possible states can be reduced until a player knows their cards, which
           is the case if one of the players has the same (set of) cards in all words she considers possible.</p>
 
-      <h4>Game description</h4>
+      <h3>Game description</h3>
       <p>
           Before we continue with the detailed game description and its rules, we first establish some common knowledge at the start of the game:
           <ul>
@@ -59,6 +59,33 @@
 
     <section>
         <h2>Formal Model</h2>
+        <h3>Kripke Model</h3>
+
+        For a formal representation of the problem we use the notation as given by \cite{jdtop2024}. For the Aces and Eights we use $A=\{1,2,3\}$ and $P=\{88_1, A8_1,AA_1,88_2,A8_2,AA_2,88_3,A8_3,AA_3\}$,
+        where $88_1$ means `Player 1 holds two eights', and $A8_2$ means `Player 2 holds an eight and an ace' etc.<br>
+        The Kripke model is in $S5$ and formulated as follows $M=\langle S,R,V\rangle$.<br>
+        Each state $s \in S$ was formulated in a sequential manner from player 1 to 3, with an ``A" representing an ace and an ``8" representing the 8 card.<br>
+        The transitions $R$ for each player in the model connect each state for which the agent's own cards differ and the other agent's cards do not, as this is
+        the only uncertainty each agent has. The relations for agent $i$ are $R_i(w,v)$ iff $V(P_j) \in v$ and $V(P_j) \in w$ with $i,j \in A$ and for all $j \neq i$,
+        where $P_j$ is player $j$'s hand, e.g. $R_i(w,v)$ exists where $w=A8A8A8$ and $v=AAA8A8$ because $V(A8_2) \in w$ and $V(A8_2) \in v$, $V(A8_3) \in w$ and $V(A8_3) \in v$.<br>
+
+        For example the state in which Player 1 `received an ace and an 8 ($A8_1$), Player 2 received two aces ($AA_2$) and Player 3 received two eights ($88_3$), would be $V(A8_1)\cap V(AA_2) \cap V(88_3)=A8AA88$.<br>
+        The total number of initial states was reduced by acknowledging that the card combination 8A results in exactly the same (logical) situation as A8. Therefore, all states with the combination 8A are disregarded,
+        as each one is already incorporated by its A8 counterpart, so the order does not matter. This results in 19 possible states. A graph of the resulting model is shown in <a href="#initial-model">Figure 1</a>.
+    <figure id="initial-model" style="text-align:center;">
+        <img src="visualization/round_1.png" alt="Initial Kripke Model" style="width:50%;">
+        <figcaption>The initial Kripke model at the start of the game.</figcaption>
+    </figure>
+
+
+        <p><strong>Clarification Kripke Model:</strong></p>
+    <ul>
+        <li> The model is in S5, which means it is reflexive, transitive and symmetric.</li>
+        <li> Reflexive edges are not drawn.</li>
+        <li> Lines are drawn instead of symmetrical edges.</li>
+        <li> Note that for some of the transitions around the middle (A8A8A8) state, some transitive edges have become hidden, because of a visualisation issue with the
+        used Python library ``networkx", which could not be easily resolved.</li>
+    </ul>
 
         <!-- ... (Continue with the formal model content) -->
 

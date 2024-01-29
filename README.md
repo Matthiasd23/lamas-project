@@ -21,7 +21,7 @@ This file contains the main class `AcesAndEightsGame`. This class initializes th
 
 ### `player.py`
 
-The `Player` class is defined in this file. Each player keeps track of their cards, knowledge of the game state (by updating their KripkeModel), and interacts with others by commmunicating their knowledge of their cards.
+The `Player` class is defined in this file. Each player keeps track of their cards, knowledge of the game state, and interacts with others by commmunicating their knowledge of their cards.
 
 ### `model.py`
 

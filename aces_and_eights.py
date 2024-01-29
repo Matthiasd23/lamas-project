@@ -1,4 +1,5 @@
 import random
+from model import KripkeModel
 from player import Player
 
 class AcesAndEightsGame:
@@ -14,6 +15,7 @@ class AcesAndEightsGame:
         self.cards = ["A"] * (num_cards // 2) + ["8"] * (num_cards // 2)
         self.players = [Player(f'Player {i+1}', self.cards) for i in range(num_players)]
         self.table = None
+        self.model = KripkeModel()
 
     def deal_cards(self):
         """
@@ -42,14 +44,15 @@ class AcesAndEightsGame:
                         visible_cards += other_player.cards
                 else:
                     visible_cards += [".", "."] # Regex for "don't know"
-            player.set_model_state_regex(''.join(visible_cards))
+            player.set_state_regex(''.join(visible_cards))
 
     def make_announcements(self):
         """
         Have each player make an announcement about their knowledge state.
         """
         for player in self.players:
-            player.communicate()
+            player.communicate(self.model)
+        self.model.display_graph()
 
     def check_for_winners(self):
         """Check if there are any winners and update models if the game continues."""
@@ -63,6 +66,5 @@ class AcesAndEightsGame:
             return True
 
         # Let players update their model if no one knows their cards yet
-        for player in self.players:
-            player.update_dont_know()
+        self.model.update_dont_know()
         print("No one knows their cards yet, playing another round.")

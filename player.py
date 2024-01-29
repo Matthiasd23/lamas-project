@@ -1,3 +1,4 @@
+import re
 from model import KripkeModel
 
 
@@ -12,7 +13,8 @@ class Player:
         self.name = name
         self.cards = []
         self.knows_cards = False
-        self.model = KripkeModel(all_cards, name)
+        self.state_regex = ""
+        self.actual_cards = []
 
     def __str__(self):
         """Provide a string representation of the Player, which is their name."""
@@ -22,19 +24,18 @@ class Player:
         """Print the player's cards to the console."""
         print(f"{self.name}'s cards: {self.cards}")
 
-    def set_model_state_regex(self, state_regex):
+    def set_state_regex(self, state_regex):
         """Set the state regex for this player's Kripke model to reflect known card information.
 
         Args:
         state_regex (str): A regex pattern representing the cards this player can see.
         """
-        self.model.set_state_regex(state_regex)
+        self.state_regex = state_regex
     
     def print_knows_cards(self):
         """Print a statement to the console indicating whether the player knows their cards."""
         if self.knows_cards:
-            cards = self.model.get_cards()
-            print(f"{self.name} knows their cards: an " + cards[0] + " and an " + cards[1] + ".")
+            print(f"{self.name} knows their cards: an " + self.actual_cards[0] + " and an " + self.actual_cards[1] + ".")
         else:
             print(f"{self.name} doesn't know their cards.")
 
@@ -46,27 +47,35 @@ class Player:
         """
         self.knows_cards = knows_cards
 
-    def deduce_cards(self):
+    def deduce_cards(self, model: KripkeModel):
         """
-        Use the model to (possibly) deduce the cards the player has.
-        """
-        if self.model.deduce_state():
-            self.set_knows_cards(True)
+        Deduce actual state by removing states that don't match the state regex (cards a player knows) 
+        and checking whether there is only one state left.
 
-    def communicate(self):
+        Returns:
+        bool: True if the state could be deduced, False otherwise.
+        """
+        if self.state_regex:
+            pattern = re.compile(self.state_regex)
+            states = [state for state in model.states if not pattern.match(state)]
+            all_states = list(model.states)
+
+            for state in states:
+                all_states.remove(state)
+
+            if len(all_states) == 1:
+                correct_state = list(all_states)[0]
+                location = int(self.name[-1]) * 2
+                cards = correct_state[location - 2:location]
+                self.actual_cards = cards
+                self.knows_cards = True
+
+    def communicate(self, model: KripkeModel):
         """
         Try to deduce cards and tell other players what you know.
         """
-        self.deduce_cards()
+        self.deduce_cards(model)
         self.print_knows_cards()
-        self.model.display_graph()
         return self.knows_cards
-    
-    def update_dont_know(self):
-        """
-        If everyone announces they don't know their cards, update the Kripke model.
-        """
-        self.model.update_dont_know()
-        self.deduce_cards()
         
         

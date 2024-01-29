@@ -15,7 +15,7 @@ class KripkeModel(nx.Graph):
 
     """
 
-    def __init__(self, cards, player_name):
+    def __init__(self):
         """Initialize a new Kripke model.
 
         Args:
@@ -26,11 +26,9 @@ class KripkeModel(nx.Graph):
         self.states = self.nodes
         self.transitions = self.edges
 
-        self.player_name = player_name
-        self.cards = cards
-        self.state_regex = ""
-        self.round = 0
+        self.round = 1
         self.initialize_model()
+        self.pos = nx.spring_layout(self, iterations=1000)
 
     def set_state_regex(self, state_regex):
         """Set the regular expression pattern that matches the known states of a player's cards.
@@ -40,7 +38,6 @@ class KripkeModel(nx.Graph):
         For example: "A8..A8", which would be the regex of player 2.
         """
         self.state_regex = state_regex
-        self.display_graph()
 
     def get_cards(self):
         """Get the cards currently held by the player.
@@ -106,31 +103,6 @@ class KripkeModel(nx.Graph):
             for start, end in transition:
                 self.add_transition(all_states[start - 1], all_states[end - 1], player)
 
-    def deduce_state(self):
-        """
-        Deduce actual state by removing states that don't match the state regex (cards a player knows) 
-        and checking whether there is only one state left.
-
-        Returns:
-        bool: True if the state could be deduced, False otherwise.
-        """
-        if self.state_regex:
-            pattern = re.compile(self.state_regex)
-            states = [state for state in self.states if not pattern.match(state)]
-            all_states = list(self.states)
-
-            for state in states:
-                all_states.remove(state)
-
-            if len(all_states) == 1:
-                correct_state = list(all_states)[0]
-                location = int(self.player_name[-1]) * 2
-                cards = correct_state[location - 2:location]
-                self.cards = cards
-                return True
-
-        return False
-
     def update_dont_know(self):
         """
         If no one knows, remove all states that are not reachable by everyone: then that would have been the 
@@ -160,19 +132,13 @@ class KripkeModel(nx.Graph):
         Display the Kripke model graph using networkx and matplotlib.
         """
         view_graph = copy.deepcopy(self)
-        if self.state_regex:
-            pattern = re.compile(self.state_regex)
-            states = [state for state in self.states if not pattern.match(state)]
-            for state in states:
-                view_graph.remove_state(state)
 
-        pos = nx.spring_layout(view_graph, iterations=250)
-        nx.draw(view_graph, pos, with_labels=True, node_color='lightblue', edge_color='gray', node_size=2000)
+        fig, ax = plt.subplots(figsize=(14, 10))
+        nx.draw(view_graph, self.pos, with_labels=True, node_color='lightblue', edge_color='gray', node_size=2000, ax=ax)
         edge_labels = nx.get_edge_attributes(view_graph, 'player')
-        nx.draw_networkx_edge_labels(view_graph, pos, edge_labels=edge_labels)
+        nx.draw_networkx_edge_labels(view_graph, self.pos, edge_labels=edge_labels)
 
-        # Save the graph to a file for player 1
-        plt.savefig(f"visualization/{self.player_name}_round_{self.round}.png", bbox_inches='tight', format='png')
+        plt.savefig(f"visualization/round_{self.round}.png", bbox_inches='tight', format='png', dpi=300)
         self.round += 1
 
         # plt.show() # Uncomment to show the graph in a window

@@ -242,23 +242,81 @@
 
     <section>
         <h2>Riddle Implementation</h2>
+        <p>For the implementation of the game, we used <code>python</code> and the graph-library <code>networkx</code> to implement the Kripke model.
+        First, the game is initialized, keeping track of the card deck (a list of 4 "A"s and 4 "8"s), the players, and the cards on the table (which can be mostly disregarded in the rest of the implementation).
+        Then, the cards are dealt by shuffling the deck and assigning each player two cards. The game also contains a Kripke model keeping track of the possible states the game can be in. The model is initialized exactly as shown in Figure <a href="#fig:initial-model">1</a>.</p>
 
-        <!-- ... (Continue with the riddle implementation content) -->
-        <h3>Visualization</h3>
+        <p>After the players have been dealt their cards, they save the cards they can see (from the other players) by storing the regular expression (regex) version of the possible states.
+        For example (using the state definition as given in Section <a href="#sec:model">2</a>), if Player 2 sees that Player 1 has "A8" and Player 3 has "AA", then all possible states in regex format would be: "A8..AA". This format can be easily used to match with states.</p>
+
+        <p>After the initialization of the game, four rounds are played (the maximum needed for anyone to deduce their cards), which consist of all players announcing whether they know their cards (initially always false) and checking the game for winners.
+        These two actions involve the two main logical parts of the implementation:</p>
+
+        <ol>
+        <li>Announcing cards consists of two steps: a player's attempt to deduce their cards using the Kripke model and communicating their attempt.
+            <ol type="a">
+                <li>Deducing cards consists of comparing all states left in the graph with their own regex of possible states. If there is only one state left that matches their regex, then they know this is the correct world and they can use it to deduce their own cards. The player then knows their cards.</li>
+                <li>The players communicate whether they know their cards, and if so, which cards they know they have.</li>
+            </ol>
+        </li>
+        <li>Checking the game for winners stops the game if any player has announced they know their cards and then declares those players that have the winner(s). If no one has, then the Kripke model is updated based on that information. That update consists of removing all states from the model that are not reachable by everyone (excluding reflexive transitions), because those states are no longer possibilities as explained before.</li>
+        </ol>
+
+        <p>Through repeated application of these steps for four rounds, a winner is always found (because after four rounds, the correct state is always found, see Section <a href="#sec:gen-dev">3</a>).</p>
     </section>
 
     <section>
         <h2>Results</h2>
+        <p>The solver, implemented as described above, solves each possible case correctly. Below you can find the (terminal) output of an example run.</p>
+        <p>In this example run, the true state is 888AAA. This was the output of the run:</p>
 
-        <!-- ... (Continue with the results content) -->
+        <pre>
+        Correct state: 888AAA
+        Player 1's cards: ['8', '8']
+        Player 2's cards: ['8', 'A']
+        Player 3's cards: ['A', 'A']
 
+        Round 1:
+        Player 1 doesn't know their cards.
+        Player 2 doesn't know their cards.
+        Player 3 doesn't know their cards.
+        No one knows their cards yet, playing another round.
+
+        Round 2:
+        Player 1 doesn't know their cards.
+        Player 2 knows their cards: an A and an 8.
+        Player 3 doesn't know their cards.
+        There is a winner! The winners are: Player 2!
+        </pre>
+
+        <h3>General model development</h3>
+        <p id="sec:gen-dev">The Kripke model develops in the same way each game. This standard development of the model is already shown in Section <a href="#sec:model">Formal Model</a>, but more conveniently visualized in Figure <a href="#fig:gen-development">Figure 4</a>.</p>
+
+<!--         <figure id="fig:gen-development">
+            <img src="pdfresizer.com-pdf-crop (3).pdf" alt="The development of the Kripke model for each round."
+                style="width: 100%;">
+            <figcaption>The development of the Kripke model for each round.</figcaption>
+        </figure> -->
+        <figure id="fig:gen-development" style="text-align:center;">
+        <img src="visualization/pdfresizer.com-pdf-crop (3).png" alt="Initial Kripke Model" style="width:50%;">
+        <figcaption style="font-size: larger;">Figure 4: The development of the Kripke model for each round.</figcaption>
+        </figure>
+
+        <p>Figure <a href="#fig:gen-development">gen-development</a> shows why a game can run for a maximum of four rounds.
+            Namely, when Round 4 is reached, only one state is left. Therefore, at Round 4, everyone will always know their cards.</p>
     </section>
 
-    <section>
-        <h2>Discussion and Conclusion</h2>
+        <section>
+        <h2>Discussion and Future Work</h2>
+        <p>In this work, we have successfully managed to solve the Aces and Eights riddle with the help of a Kripke structure. From the 19 starting initial states, we can see how the general structure gets reduced each round to fewer states and transitions. This is facilitated by simultaneous public announcements, knowledge, and the fact that everyone has common knowledge about the rules. We do not perform any additional experiments or evaluations of the model, as the goal here has been to make a solver that utilizes pattern matching on the graphical Kripke model to deduce the states and transitions to be removed each round. The only difference we have here in our riddle from <cite>jdtop2024</cite> is the fact that we use simultaneous announcements.</p>
 
-        <!-- ... (Continue with the discussion and conclusion content) -->
+        <p>When it comes to limitations, an apparent issue lies with the <code>networkx</code> graphical models showing overlapping transitions, which overwrites the label for the transition below it (Figure <a href="#fig:initial-model">1</a>). Other limitations include the very assumptions we make about every player being a perfect and truthful logician, which is not true in reality. A more comprehensive model that could be used to compare data with human participants would require avenues for human-like error, which are not present in the current model as it just aims to solve the riddle.</p>
 
+        <p>Furthermore, as opposed to the version with subsequent announcements, simultaneous announcements can lead to unsuccessful announcements (if a player knows their cards afterward). For example, a player announces in the same round simultaneously that they do not know their cards alongside other players, but after the three announcements, that player does know their hand. This means a part of what held true in the simultaneous announcements does not hold true anymore. We believe incorporating the change of simultaneous announcements into the model would affect the length of a game. This would result in faster (fewer public announcements) games. The unsuccessful announcements did not affect the results in this model; however, for a future project, this could be investigated in comparison to successful announcements.</p>
+
+        <p>For future endeavors, we would like to suggest the addition of more players and cards to the puzzle and, more importantly, do experiments comparing simultaneous versus non-simultaneous announcements and how it changes the model behavior. Another suggestion would be to incorporate errors in the agent's judgments to make the gameplay more human-like, maybe add Theory of Mind agents like <a href="#ref2">Top et al, 2024</a>.</p>
+
+        <p>Lastly, when we first tried to solve the riddle (to formalize it) by hand, we got stuck, and even in practice, it was hard to play out the riddle, given the possible states and transitions at the start of each round. In retrospect, implementing the model straight in a version that allowed for visualization would have helped immensely.</p>
     </section>
 
     <section>

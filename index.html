@@ -29,31 +29,32 @@
 
     <section>
       <h2>Introduction</h2>
-      <p>In the field of epistemic reasoning, the Aces and Eights \citep{cedegao2021} riddle is a compelling case study for logicians. 
-          The following text serves as our report on applying Kripke's reasoning to the puzzle. The puzzle consists of three players, each of which is dealt two of eight cards, 4 aces and 4 eights. 
-          Out of these, 2 cards are left face down and no player can see their cards but can see the ones dealt to others. Through repeated public announcements (PAs) one of the players is eventually able to figure out what hand they were dealt. 
-          A Kripke model is applied here, where different states represent the different possibilities of card combinations (worlds $w_i$). These worlds are connected via accessibility relations that visualize the players' knowledge. 
-          Through repeated PAs, the possible states can be reduced until a player knows their cards, which is the case if one of the players has the same (set of) cards in all words she considers possible.</p>
+      <p>In the field of epistemic reasoning, the Aces and Eights (<a href="#ref1">Cedegao et al., 2021</a>) riddle is a compelling case study for logicians.
+          The following text serves as our report on applying Kripke's reasoning to the puzzle. The puzzle consists of three players, each of which is dealt two of eight cards, 4 aces and 4 eights.
+          Out of these, 2 cards are left face down and no player can see their cards but can see the ones dealt to others. Through repeated public announcements (PAs) one of the players is eventually
+          able to figure out what hand they were dealt. A Kripke model is applied here, where different states represent the different possibilities of card combinations (worlds $w_i$).
+          These worlds are connected via accessibility relations that visualize the players' knowledge. Through repeated PAs, the possible states can be reduced until a player knows their cards, which
+          is the case if one of the players has the same (set of) cards in all words she considers possible.</p>
 
       <h4>Game description</h4>
       <p>
           Before we continue with the detailed game description and its rules, we first establish some common knowledge at the start of the game:
           <ul>
-            <li>Every player konws the rules</li>
-            <li>Every player tells the truth</li>
+            <li>Every player knows the rules and follows the rules</li>
+            <li>No player ever lies</li>
             <li>Every player is a perfect logical reasoner</li>
             <li>These rules are common knowledge</li>
           </ul>
-      Now that this has been established, we can explain the exact procedure of the game; it starts with 3 players and 8 cards, the latter consisting of 4 aces and 4 eights. 
-      Next, each player is dealt 2 cards after they are shuffled of course, with the remaining two being put face down on the surface, for example, a table. They remain unseen for the rest of the game.
-      Importantly, no player can see their own cards, but only the cards dealt to other players. In practice this would mean holding your cards in front of you with the backside towards yourself. 
-      Based on a predetermined order, each one of the players takes turns announcing (public announcements) whether they know the cards dealt to them or not. In our model we will change this, by letting all players do their public announcement at the same time. 
-      This allows the other players in the game to reason and deduce what cards they have based on what others know, and eventually, after repeated rounds of questioning, one of the three players would know what cards they were dealt.
-      The puzzle is ingeniously constructed to require the players to use a combination of deductive logic, inference based on others' actions or inactions, and an understanding of higher-order knowledge—what they know, what they know others know, and so on. 
-      Luckily for us, it can be modeled using a Kripke structure, which allows for the representation of possible worlds—each corresponding to a different arrangement of cards—and accessibility relations that encapsulate the players' knowledge about these worlds.
       </p>
-      <h4>Game rules</h4>
-      <p></p>
+      Now that this has been established, we can explain the exact procedure of the game; it starts with 3 players and 8 cards, the latter consisting of 4 aces and 4 eights.
+      Next, each player is dealt 2 cards after they are shuffled of course, with the remaining two being put face down on the surface, for example, a table.
+      Importantly, no player can see their own cards, but only the cards dealt to other players. In practice this would mean holding your cards in front of you with the backside towards yourself.
+      Based on a predetermined order, each one of the players takes turns announcing (public announcements) whether they know the cards dealt to them or not. In our model we will change this,
+      by letting all players do their public announcement at the same time. This allows the other players in the game to reason and deduce what cards they have based on what others know,
+      and eventually, after repeated rounds of questioning, one of the three players would know what cards they were dealt.
+      The puzzle is ingeniously constructed to require the players to use a combination of deductive logic, inference based on others' announcements, and an understanding of knowledge
+      ($K_i$) —what they know about their own hand. It can be modeled using Kripke structures, which allows for the representation of possible worlds—each corresponding to a different arrangement
+      of cards—and accessibility relations that encapsulate the players' knowledge about these worlds.
     </section>
 
     <section>
@@ -83,6 +84,15 @@
         <!-- ... (Continue with the discussion and conclusion content) -->
 
     </section>
+
+    <section>
+    <h2>References</h2>
+    <ol>
+        <li id="ref1">Cedegao, Z., Ham, H., & Holliday, W. H. (2021). <em>Does Amy know Ben knows you know your cards? A computational model of higher-order epistemic reasoning.</em> In Proceedings of the 43rd Annual Meeting of the Cognitive Science Society (pp. 2588-2594).</li>
+        <li id="ref2">Top, J. D., Jonker, C., Verbrugge, R., & de Weerd, H. (2024). <em>Predictive Theory of Mind Models Based on Public Announcement Logic.</em> In N. Gierasimczuk & F. R. Velázquez-Quesada (Eds.), Dynamic Logic. New Trends and Applications (pp. 85-103). Cham: Springer Nature Switzerland. ISBN 978-3-031-51777-8.</li>
+    </ol>
+    </section>
+
 
 </body>
 

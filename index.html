@@ -141,14 +141,13 @@ l<!DOCTYPE html>
         <div id="prop-2">
         $$
         \begin{equation}
-        (M,A8A8A8) \models [PA_1][PA_2][PA_3] K_1A8 \lor K_2A8 \lor K_3A8
+        (M,A8A8A8) \models [PA_1][PA_2][PA_3] K_1A8 \land K_2A8 \land K_3A8
         \label{eq:prop}
         \end{equation}
         $$
         </div>
 
-        with $PA_1$ the announcement in the first round, $PA_2$ the announcement in the second round, and $PA_3$ the announcement in the third round. In the above proposition, we use a disjunction,
-        as the game ends when any player knows their cards, not necessarily all of them (though that will prove to be the case in this situation).<br>
+        with $PA_1$ the announcement in the first round, $PA_2$ the announcement in the second round, and $PA_3$ the announcement in the third round. <br>
         The starting rounds will be globally explained to give insight into the development of the game and we will formally work out the third and fourth round of the game.
 
         <h4>Starting rounds</h4>
@@ -170,7 +169,7 @@ l<!DOCTYPE html>
         <strong>Announcement</strong> <br>
         The current Kripke model is given in <a href="#example-run-1">Figure 3</a>.  The remainder of Proposition \ref{eq:prop} that has to be calculated on this graph is: <br>
         $$
-        (M,A8A8A8)\models [PA_3]K_1A8 \lor K_2A8 \lor K_3A8
+        (M,A8A8A8)\models [PA_3]K_1A8 \land K_2A8 \land K_3A8
         $$
         The graph shows that at this stage every agent still has outgoing non-reflexive transitions from "A8A8A8", which means they cannot rule the connected states out and
         therefore they all would announce "I don't know my cards". Thus the model should be updated based on this announcement.<br>
@@ -237,8 +236,13 @@ l<!DOCTYPE html>
         $$
         The fact that everyone knows their cards, and what cards they have can be very easily derived from the fact that the only remaining state
         is the true state $A8A8A8$, as visible in <a href="#pa3">Figure 4</a>. Namely the fact that this state is constructed as follows: $V(A8_1)\cap V(A8_2) \cap V(A8_3)$, thus every player holds an eight and an ace (and everyone knows, so everyone wins).
-
-        Proposition \ref{eq:prop} can now thus be evaluated as True, as all three parts of its disjunction have been evaluated as True. This means that the game has ended and all players know their cards.
+        
+        This means that $ (M, (A8A8A8)) \models K_1A8$ and $ (M, (A8A8A8)) \models K_2A8$ and $(M, (A8A8A8)) \models K_3A8$.
+        Therefore, after $PA_1, PA_2$ and $PA_3$, Proposition \ref{eq:prop} can be evaluated as True, as all three parts of its conjunction have been evaluated as True. Thus: <br>
+        $$
+        (M,A8A8A8) \models [PA_1][PA_2][PA_3] K_1A8 \land K_2A8 \land K_3A8
+        $$
+        holds.
     </section>
 
     <section>

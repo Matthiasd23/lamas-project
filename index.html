@@ -71,7 +71,7 @@
         the only uncertainty each agent has. The relations for agent $i$ are $R_i(w,v)$ iff $V(P_j) \in v$ and $V(P_j) \in w$ with $i,j \in A$ and for all $j \neq i$,
         where $P_j$ is player $j$'s hand, e.g. $R_i(w,v)$ exists where $w=A8A8A8$ and $v=AAA8A8$ because $V(A8_2) \in w$ and $V(A8_2) \in v$, $V(A8_3) \in w$ and $V(A8_3) \in v$.<br>
 
-        For example the state in which Player 1 `received an ace and an 8 ($A8_1$), Player 2 received two aces ($AA_2$) and Player 3 received two eights ($88_3$), would be $V(A8_1)\cap V(AA_2) \cap V(88_3)=A8AA88$.<br>
+        For example the state in which Player 1 received an ace and an 8 ($A8_1$), Player 2 received two aces ($AA_2$) and Player 3 received two eights ($88_3$), would be $V(A8_1)\cap V(AA_2) \cap V(88_3)=A8AA88$.<br>
         The total number of initial states was reduced by acknowledging that the card combination 8A results in exactly the same (logical) situation as A8. Therefore, all states with the combination 8A are disregarded,
         as each one is already incorporated by its A8 counterpart, so the order does not matter. This results in 19 possible states. A graph of the resulting model is shown in <a href="#initial-model">Figure 1</a>.
     <figure id="initial-model" style="text-align:center;">
@@ -86,7 +86,7 @@
         <li> Reflexive edges are not drawn.</li>
         <li> Lines are drawn instead of symmetrical edges.</li>
         <li> Note that for some of the transitions around the middle (A8A8A8) state, some transitive edges have become hidden, because of a visualisation issue with the
-        used Python library "networkx", which could not be easily resolved.</li>
+        used Python library "networkx", which could not be easily resolved. These are the edges: $R_3(A8A8AA, A8A888), R_2(A888A8, A8AAA8), R_1(88A8A8, AAA8A8)$.</li>
     </ul>
         <h3>Public Announcement</h3>
         In this problem we have two possible public announcements, one is `I know my cards!' and the other `I do not know my cards!'.

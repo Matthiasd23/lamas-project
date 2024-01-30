@@ -29,16 +29,7 @@ class KripkeModel(nx.Graph):
         self.round = 1
         self.initialize_model()
         self.pos = nx.spring_layout(self, iterations=500)
-
-    def set_state_regex(self, state_regex):
-        """Set the regular expression pattern that matches the known states of a player's cards.
-
-        Args:
-        state_regex (str): the regex formula of all cards a player knows (and doesn't).
-        For example: "A8..A8", which would be the regex of player 2.
-        """
-        self.state_regex = state_regex
-
+        
     def get_cards(self):
         """Get the cards currently held by the player.
 

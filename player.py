@@ -25,10 +25,11 @@ class Player:
         print(f"{self.name}'s cards: {self.cards}")
 
     def set_state_regex(self, state_regex):
-        """Set the state regex for this player's Kripke model to reflect known card information.
+        """Set the regular expression pattern that matches the known states of a player's cards.
 
         Args:
-        state_regex (str): A regex pattern representing the cards this player can see.
+        state_regex (str): the regex formula of all cards a player knows (and doesn't).
+        For example: "A8..A8", which would be the regex of player 2.
         """
         self.state_regex = state_regex
     

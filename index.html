@@ -75,7 +75,7 @@ l<!DOCTYPE html>
         The total number of initial states was reduced by acknowledging that the card combination 8A results in exactly the same (logical) situation as A8. Therefore, all states with the combination 8A are disregarded,
         as each one is already incorporated by its A8 counterpart, so the order does not matter. This results in 19 possible states. A graph of the resulting model is shown in <a href="#initial-model">Figure 1</a>.
     <figure id="initial-model" style="text-align:center;">
-        <img src="visualization/round_1.png" alt="Initial Kripke Model" style="width:50%;">
+        <img src="project_images/round_1.png" alt="Initial Kripke Model" style="width:50%;">
         <figcaption style="font-size: larger;">Figure 1. The initial Kripke model at the start of the game.</figcaption>
     </figure>
 
@@ -93,7 +93,7 @@ l<!DOCTYPE html>
         An agent <i>i</i> can have one of the three card-combinations $88_i, A8_i$ or $AA_i$. Therefore, when an agent knows their cards, the formal notation for agent $i$
         who says `I know my cards!' is given as a disjunction of them knowing one of those cards combinations: $K_i88_i \lor K_iA8_i \lor K_iAA_i$. Agent $i$ knows he has either
         the set $AA$, $A8$ or $88$. The announcement `I do not know my cards!' for agent $i$ is given as the negation of "I know my cards!": $\neg(K_i88_i \lor K_iA8_i \lor K_iAA_i)$.
-        Creating simultaneous announcements, however, can lead to unsuccessful announcements, where the announcement becomes untrue after applying the public announcement to the model.
+        Creating simultaneous announcements can lead to unsuccessful announcements, where the announcement becomes untrue after applying the public announcement to the model.
 
         <h4>Informal Explanation</h4>
         Whenever all agents announce "I don't know" simultaneously, all states that do not have outgoing transitions to another state for every player should be removed,
@@ -157,12 +157,12 @@ l<!DOCTYPE html>
         resulting in the Kripke model as shown in <a href="#example-run-1">Figure 3</a>. The developments from now on will be formally clarified in the sections below.<br>
 
         <figure id="example-run" style="text-align:center;">
-        <img src="visualization/round_2.png" alt="Kripke Model round 2" style="width:50%;">
+        <img src="project_images/round_2.png" alt="Kripke Model round 2" style="width:50%;">
         <figcaption style="font-size: larger;">Figure 2. The Kripke model after $PA_1$.</figcaption>
         </figure>
 
         <figure id="example-run-1" style="text-align:center;">
-        <img src="visualization/round_3.png" alt="Kripke Model round 3" style="width:50%;">
+        <img src="project_images/round_3.png" alt="Kripke Model round 3" style="width:50%;">
         <figcaption style="font-size: larger;">Figure 3. The Kripke model after $PA_2$.</figcaption>
         </figure>
 
@@ -225,7 +225,7 @@ l<!DOCTYPE html>
         of Proposition \ref{eq:prop} now has to be calculated on this graph.
 
         <figure id="pa3" style="text-align:center;">
-        <img src="visualization/round_4.png" alt="Kripke Model round 4" style="width:50%;">
+        <img src="project_images/round_4.png" alt="Kripke Model round 4" style="width:50%;">
         <figcaption style="font-size: larger;">Figure 4. The Kripke model after $PA_3$.</figcaption>
         </figure>
 
@@ -292,8 +292,8 @@ l<!DOCTYPE html>
         <p>The Kripke model develops in the same way each game. This standard development of the model is already shown in <a href="#model">Formal Model</a>, but more conveniently visualized in <a href="#gen-development">Figure 5</a>.</p>
 
         <figure id="gen-development" style="text-align:center;">
-        <img src="visualization/pdfresizer.com-pdf-crop (3).png" alt="Initial Kripke Model" style="width:95%;">
-        <figcaption style="font-size: larger;">Figure 5: The development of the Kripke model for each round.</figcaption>
+            <iframe src="project_images/pdfresizer.com-pdf-crop (3).pdf" style="border: none; width: 100%; height: 100%; transform: scale(1.75); transform-origin: 0 0;"></iframe>
+            <figcaption style="font-size: larger;">Figure 5: The development of the Kripke model for each round.</figcaption>
         </figure>
 
         <p><a href="#gen-development">Figure 5</a> shows why a game can run for a maximum of four rounds.
@@ -305,8 +305,6 @@ l<!DOCTYPE html>
         <p>In this work, we have successfully managed to solve the Aces and Eights riddle with the help of a Kripke structure. From the 19 starting initial states, we can see how the general structure gets reduced each round to fewer states and transitions. This is facilitated by simultaneous public announcements, knowledge, and the fact that everyone has common knowledge about the rules. We do not perform any additional experiments or evaluations of the model, as the goal here has been to make a solver that utilizes pattern matching on the graphical Kripke model to deduce the states and transitions to be removed each round. The only difference we have here in our riddle from <a href="#ref2">Top et al, 2024</a> is the fact that we use simultaneous announcements.</p>
 
         <p>When it comes to limitations, an apparent issue lies with the <code>networkx</code> graphical models showing overlapping transitions, which overwrites the label for the transition below it (<a href="#initial-model"> Figure 1</a>). Other limitations include the very assumptions we make about every player being a perfect and truthful logician, which is not a realistic representation of potential actual gameplay. A more comprehensive model that could be used to compare data with human participants would require avenues for human-like error, which are not present in the current model as it just aims to solve the riddle.</p>
-
-        <p>Furthermore, as opposed to the version with subsequent announcements, simultaneous announcements can lead to unsuccessful announcements (if a player knows their cards afterward). For example, a player announces in a round that they do not know their cards alongside other players, but after the combined simultaneous announcements, that player does know their hand. This means a part of what held true in the simultaneous announcements does not hold true anymore. The unsuccessful announcements did not affect the results in this model. However, this should mean that by letting everyone announce at the same time, the game might take "unnecessarily" many rounds. As a player apparently does an announcement that would not have been done if they had knowledge of other parts of the announcement. This does not occur while doing subsequent announcements, which should thus be more efficient round-wise.</p>
 
         <p>For future endeavors, we would like to suggest the addition of more players and cards to the puzzle and experiments comparing simultaneous versus non-simultaneous announcements and how it changes the model behavior. Another suggestion would be to incorporate errors in the agent's judgments to make the gameplay more human-like, or add Theory of Mind agents like <a href="#ref2">Top et al, 2024</a>. The model is also not fit yet for human participants, which could be an interesting adjustment to allow for experiments with human players. </p>
 

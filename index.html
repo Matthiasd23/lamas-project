@@ -246,7 +246,7 @@
         Then, the cards are dealt by shuffling the deck and assigning each player two cards. The game also contains a Kripke model keeping track of the possible states the game can be in. The model is initialized exactly as shown in <a href="#initial-model">Figure 1</a>.</p>
 
         <p>After the players have been dealt their cards, they save the cards they can see (from the other players) by storing the regular expression (regex) version of the possible states.
-        For example (using the state definition as given in <a href="#model">Formal model </a>), if Player 2 sees that Player 1 has "A8" and Player 3 has "AA", then all possible states in regex format would be: "A8..AA". This format can be easily used to match with states.</p>
+        For example (using the state definition as given in <a href="#model">Formal model </a>), if Player 2 sees that Player 1 has "A8" and Player 3 has "AA", then all possible states in regex format would be: "A8..AA" (each "8A" that is seen, is saved as "A8" in this format). This format can be easily used to match with states.</p>
 
         <p>After the initialization of the game, four rounds are played (the maximum needed for anyone to deduce their cards), which consist of all players announcing whether they know their cards (initially always false) and checking the game for winners.
         These two actions involve the two main logical parts of the implementation:</p>
@@ -254,7 +254,7 @@
         <ol>
         <li>Announcing cards consists of two steps: a player's attempt to deduce their cards using the Kripke model and communicating their attempt.
             <ol type="a">
-                <li>Deducing cards consists of comparing all states left in the graph with their own regex of possible states. If there is only one state left that matches their regex, then they know this is the correct world and they can use it to deduce their own cards. The player then knows their cards.</li>
+                <li>Deducing cards consists of comparing all states left in the graph with their own regex of possible states. If there is only one state left that matches their regex, then they know this is the correct world and they can use it to deduce their own cards. The player then knows their cards. In theory, there could also be multiple states left in which a player holds the same cards in order for a player to know their cards. However, because of our state reduction by acknowledging the cards A8 lead to the same situation as 8A, this is not possible in this application. </li>
                 <li>The players communicate whether they know their cards, and if so, which cards they know they have.</li>
             </ol>
         </li>

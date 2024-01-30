@@ -28,7 +28,7 @@ class KripkeModel(nx.Graph):
 
         self.round = 1
         self.initialize_model()
-        self.pos = nx.spring_layout(self, iterations=1000)
+        self.pos = nx.spring_layout(self, iterations=500)
 
     def set_state_regex(self, state_regex):
         """Set the regular expression pattern that matches the known states of a player's cards.
@@ -138,7 +138,7 @@ class KripkeModel(nx.Graph):
         edge_labels = nx.get_edge_attributes(view_graph, 'player')
         nx.draw_networkx_edge_labels(view_graph, self.pos, edge_labels=edge_labels)
 
-        plt.savefig(f"visualization/round_{self.round}.png", bbox_inches='tight', format='png', dpi=300)
+        plt.savefig(f"visualization/round_{self.round}.png", bbox_inches='tight', format='png')
         self.round += 1
 
         # plt.show() # Uncomment to show the graph in a window
